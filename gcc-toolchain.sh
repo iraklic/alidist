@@ -13,6 +13,7 @@ prefer_system_check: |
   set -e
   which gfortran || { echo "gfortran missing"; exit 1; }
   case $REQUESTED_VERSION in
+    v12*) MIN_GCC_VERSION=120100 ;;
     v10*) MIN_GCC_VERSION=100200 ;;
     *) MIN_GCC_VERSION=70300 ;;
   esac
@@ -21,7 +22,7 @@ prefer_system_check: |
   gcc -xc++ - -c -o /dev/null << EOF
   #define GCCVER ((__GNUC__ * 10000)+(__GNUC_MINOR__ * 100)+(__GNUC_PATCHLEVEL__))
   #if (GCCVER < $MIN_GCC_VERSION)
-  #error "System's GCC cannot be used: we need at least GCC $REQUESTED_VERSION. We'll compile our own version."
+  #error "System's GCC cannot be used: we need at least ($MIN_GCC_VERSION/1e4), while we intend to go for GCC $REQUESTED_VERSION. We'll compile our own version."
   #endif
   EOF
 ---

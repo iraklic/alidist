@@ -1,6 +1,6 @@
 package: jq
-version: v1.6
-tag: jq-1.6
+version: v1.6-alice1
+tag: 52d5988
 source: https://github.com/stedolan/jq.git
 build_requires:
   - "GCC-Toolchain:(?!osx)"
@@ -8,7 +8,7 @@ build_requires:
   - "autotools:(slc6|slc7)"
 prefer_system: (?!slc5.*)
 prefer_system_check: |
-  type jqfoo
+  type jq
 ---
 # Hack to avoid having to do autogen inside $SOURCEDIR
 rsync -a --exclude '**/.git' --delete $SOURCEDIR/ $BUILDDIR
@@ -36,8 +36,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0                                                                        \\
-       ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
+module load BASE/1.0                                                                       
 # Our environment
 set JQ_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$JQ_ROOT/bin

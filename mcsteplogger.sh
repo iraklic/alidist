@@ -1,6 +1,6 @@
 package: MCStepLogger
 version: "%(tag_basename)s"
-tag: "v0.5.0"
+tag: "v0.6.0"
 source: https://github.com/AliceO2Group/VMCStepLogger.git
 requires:
   - "GCC-Toolchain:(?!osx)"
@@ -11,7 +11,6 @@ build_requires:
   - CMake
   - alibuild-recipe-tools
 ---
-
 #!/bin/bash -e
 cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT   \
           ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}      \
