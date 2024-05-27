@@ -1,6 +1,6 @@
 package: boost
-version: v1.83.0-alice1
-tag: v1.83.0-alice1
+version: v1.83.0-alice2
+tag: v1.83.0-alice2
 source: https://github.com/alisw/boost.git
 requires:
   - "GCC-Toolchain:(?!osx)"
@@ -119,7 +119,7 @@ MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
 
 mkdir -p etc/modulefiles
-alibuild-generate-module --lib > etc/modulefiles/$PKGNAME
+alibuild-generate-module --lib --cmake > etc/modulefiles/$PKGNAME
 cat << EOF >> etc/modulefiles/$PKGNAME
 prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
 EOF

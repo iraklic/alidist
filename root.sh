@@ -1,6 +1,6 @@
 package: ROOT
 version: "%(tag_basename)s"
-tag: "v6-30-01-alice2"
+tag: "v6-30-01-alice4"
 source: https://github.com/alisw/root.git
 requires:
   - arrow
@@ -182,7 +182,14 @@ cmake $SOURCEDIR                                                                
       ${PYTHON_EXECUTABLE:+-DPYTHON_EXECUTABLE="${PYTHON_EXECUTABLE}"}                 \
 -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$ALIEN_RUNTIME_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT;$LIBPNG_ROOT;$LZMA_ROOT;$PROTOBUF_ROOT;$FFTW3_ROOT"
 
+# Workaround issue with cmake 3.29.0
+sed -i.removeme '/deps = gcc/d' build.ninja
+rm *.removeme
 cmake --build . --target install ${JOBS+-j $JOBS}
+
+# Make sure ROOT actually found its build dependencies and didn't disable
+# features we requested. "-Dfail-on-missing=ON" would probably be better.
+[ "$("$INSTALLROOT/bin/root-config" --has-fftw3)" = yes ]
 
 # Add support for ROOT_PLUGIN_PATH envvar for specifying additional plugin search paths
 grep -v '^Unix.*.Root.PluginPath' $INSTALLROOT/etc/system.rootrc > system.rootrc.0
